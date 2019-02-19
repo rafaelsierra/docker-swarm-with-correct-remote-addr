@@ -1,0 +1,36 @@
+version: "3.5"
+
+services:
+  server:
+    image: httpd:2
+    deploy:
+      mode: global
+
+    ports:
+      - target: 80
+        published: 80
+        protocol: tcp
+        mode: host
+        # If you have SSL certificates, just duplicate the port 80 above ansd
+        # change to 443
+    configs:
+      - source: httpd.conf
+        target: /usr/local/apache2/conf/httpd.conf
+
+#
+# If your stack has to access a service that is on another network, just add 
+# it to the networks entry below
+#
+#    networks:
+#      - some_other_network
+#
+
+
+# And again on the top level networks config
+#networks:
+#  some_other_network:
+#    external: true
+
+configs:
+  httpd.conf:
+    file: ./httpd.conf
